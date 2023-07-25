@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("images/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+.grid_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "header header" "calender23 description";
+    grid-template-rows: auto;
+}
+
+.calender23 {
+    grid-area: calender23;
+    margin: auto;
+    background-color: #ffc400;
+    width: 75%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    text-align: center;
+    font-size: auto;
+    font-weight: bold;
+    color: #000000;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+
+.header {
+    grid-area: header;
+    margin: auto;
+    color: #ffffff;
+    font-size: auto;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
+
+
+}
+
+.description {
+    grid-area: description;
+    margin: auto;
+    width: 75%;
+    padding: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: auto;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Cover Image for each month */
+.calender_cover {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+    border: 1px solid #000000;
+    border-radius: 10px;
+}
+
+.calender_table {
+    background-color: #ffffff;
+    table-layout: fixed;
+    width: 100%;
+    max-height: 100%;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.calender_table td {
+    border: 1px solid #000000;
+    height: 100%;
+    vertical-align: bottom;
+    padding: 5px;
+    text-align: end;
+}
+
+.calender_table th {
+    background: #ff4800;
+    height: 100%;
+    text-align: center;
+    font-size: auto;
+    font-weight: bold;
+    color: #000000;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+
+.calender_table tbody td {
+    height: 3em;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    vertical-align: bottom;
+    padding: 5px;
+    text-align: end;
+    font-size: auto;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+.saturdays {
+    color: #ff00007e;
+}
+
+.sundays {
+    color: #ff0000;
+}
+
+.days_other_months {
+    color: #00000031;
+}
+
+.month_nav {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+.month_nav button {
+    background-color: transparent;
+    border: none;
+    font-size: auto;
+    font-weight: bold;
+    color: #000000;
+}
