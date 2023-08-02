@@ -4,9 +4,13 @@ window.onload = function () {
 };
 
 function main() {
+    changeTime(new Date().getTime());
+}
+
+function changeTime(time) {
 
     //* Get the current date
-    let date = new Date(2023, 11, 25);
+    let date = new Date(time);
 
     //* Get and set the specific date informations
     let day = date.getDate();
@@ -20,6 +24,12 @@ function main() {
     //? let firstDayOfMonth = new Date(year, month, 1).getDate();
 
     console.log(holiday);
+
+    let calendarTableForHTML = getCalendarTableForHTML(date);
+    let calendarHeadForHTML = getCalendarHeadForHTML(date);
+    let html = calendarHeadForHTML + calendarTableForHTML;
+
+
 
     //!==========//HTML-Replace//============================================================================================================================//
     //! Find and overwrite the specific html elements                                   
@@ -50,9 +60,10 @@ function main() {
     });
     document.getElementById("month_information").innerHTML = getMonthInformationFromDB(month);
     document.getElementById("holiday_info").innerHTML = getHolidayInfoForHTML(holiday);
+    document.getElementById("calendar").innerHTML = html;
+
     //!======================================================================================================================================================//
 }
-
 
 
 //?==========//Functions//===================================================================================================================================//
@@ -194,3 +205,92 @@ function getMonthInformationFromDB(month) {
 }
 
 //?==========================================================================================================================================================//
+
+function getCalendarHeadForHTML(date) {
+    // let month = getMonthGerman(date.getMonth());
+
+    let html = `<div class="calendar">`;
+    html += `<img class="calendar_cover" , src="images\\black_cat.jpg" alt="black cat closeup face" />`;
+    html += `<div class="month_nav">`;
+    html += `<button>`;
+    html += `&lt;Zurück`;
+    html += `</button>`;
+    html += `<h1>`;
+    html += `<span class="month_german"></span>`;
+    html += `</h1>`;
+    html += `<button onclick="change()">`;
+    html += `Weiter>`;
+    html += `</button>`;
+    html += `</div>`;
+
+    return html;
+}
+
+
+function getCalendarTableForHTML(date) {
+    let firstOfNextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1).getTime();
+    let firstOfMonthBefore = new Date(date.getFullYear(), date.getMonth() - 1, 1).getTime();
+
+
+    let html = `<table class="calendar_table">`;
+    html += `<thead>`;
+    html += `<tr>`;
+    html += `<th>Mo</th>`;
+    html += `<th>Di</th>`;
+    html += `<th>Mi</th>`;
+    html += `<th>Do</th>`;
+    html += `<th>Fr</th>`;
+    html += `<th>Sa</th>`;
+    html += `<th>So</th>`;
+    html += `</tr>`;
+    html += `</thead>`;
+    html += `<tbody>`;
+    html += `<tr>`;
+    html += '<td class="sundays days_other_months" onClick="changeTime(' + firstOfMonthBefore + ')">3</td>';
+    html += `<td>1</td>`;
+    html += `<td>2</td>`;
+    html += `<td>3</td>`;
+    html += `<td>4</td>`;
+    html += `<td class="saturdays">5</td>`;
+    html += `<td class="sundays">6</td>`;
+    html += `</tr>`;
+    html += `<tr>`;
+    html += `<td>7</td>`;
+    html += `<td>8</td>`;
+    html += `<td>9</td>`;
+    html += `<td>10</td>`;
+    html += `<td>11</td>`;
+    html += `<td class="saturdays">12</td>`;
+    html += `<td class="sundays">13</td>`;
+    html += `</tr>`;
+    html += `<tr>`;
+    html += `<td>14</td>`;
+    html += `<td>15</td>`;
+    html += `<td>16</td>`;
+    html += `<td>17</td>`;
+    html += `<td>18</td>`;
+    html += `<td class="saturdays">19</td>`;
+    html += `<td class="sundays">20</td>`;
+    html += `</tr>`;
+    html += `<tr>`;
+    html += `<td>21</td>`;
+    html += `<td>22</td>`;
+    html += `<td>23</td>`;
+    html += `<td>24</td>`;
+    html += `<td>25</td>`;
+    html += `<td class="saturdays">26</td>`;
+    html += `<td class="sundays">27</td>`;
+    html += `</tr>`;
+    html += `<tr>`;
+    html += `<td>28</td>`;
+    html += `<td>29</td>`;
+    html += `<td>30</td>`;
+    html += `<td>31</td>`;
+    html += `<td class="days_other_months">1</td>`;
+    html += `<td class="saturdays days_other_months">2</td>`;
+    html += '<td class="sundays days_other_months" onClick="changeTime(' + firstOfNextMonth + ')">3</td>';
+    html += `</tr>`;
+    html += `</tbody>`;
+    html += `</table>`;
+    return html;
+} 
