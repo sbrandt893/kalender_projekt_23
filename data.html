@@ -6,28 +6,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <title>Kalender 2023</title>
+    <script language="javascript" type="text/javascript" src="functionality.js"></script>
+    <!-- <script language="javascript" type="text/javascript" src="database.js"></script> -->
+    <title>Kalender <span class="year">x</span></title>
 </head>
 
 <body>
     <div class="grid_container">
         <div class="header">
-            <h1>Kalender 2023</h1>
+            <h1>
+                Kalender <span class="year">x</span>
+            </h1>
         </div>
-        <div class="calender23">
-            <img class="calender_cover" , src="images\black_cat.jpg" alt="black cat closeup face" />
+        <div class="calendar">
+            <img class="calendar_cover" , src="images\black_cat.jpg" alt="black cat closeup face" />
             <div class="month_nav">
                 <button>
                     &lt;Zurück
                 </button>
                 <h1>
-                    August
+                    <span class="month_german">x</span>
                 </h1>
                 <button>
                     Weiter>
                 </button>
             </div>
-            <table class="calender_table">
+            <table class="calendar_table">
                 <thead>
                     <tr>
                         <th>Mo</th>
@@ -41,7 +45,7 @@
                 </thead>
 
                 <tbody>
-                    <div class="calender_body">
+                    <div class="calendar_body">
                         <tr>
                             <td class="days_other_months">31</td>
                             <td>1</td>
@@ -91,17 +95,19 @@
                 </tbody>
             </table>
         </div>
-        <div class="description">
-            <h2>August</h2>
+        <div class="day_description">
+            <h2> <span class="date_german_format">x</span> </h2>
             <p>
-                Der August ist der achte Monat des Jahres im gregorianischen Kalender. Er hat 31 Tage. Der August wurde
-                nach
-                dem römischen Kaiser Augustus benannt. Zuvor hieß er Sextilis (lateinisch für „der Sechste“). Der August
-                ist
-                der erste der drei Sommermonate auf der Nordhalbkugel. Er beginnt mit demselben Wochentag wie der
-                Februar
-                und endet mit demselben Wochentag wie der November. Im August findet das Sternbild des Schützen seinen
-                Höchststand.
+                Der <span class="date_german_format">x</span> ist ein <span class="weekDay">x</span>, und
+                zwar der <span class="howManyWeekDay">x</span>. <span class="weekDay">x</span> im
+                <span class="month_german">x</span> des Jahres <span class="year">x</span>.
+                Es handelt sich nicht um einen gesetzlichen Feiertag.
+            </p>
+        </div>
+        <div class="month_description">
+            <h2><span class="month_german">x</span></h2>
+            <p>
+                <span id="month_information">x</span>
             </p>
         </div>
     </div>
