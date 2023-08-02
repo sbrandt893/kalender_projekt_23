@@ -6,7 +6,7 @@ window.onload = function () {
 function main() {
 
     //* Get the current date
-    let date = new Date(2023, 7, 14);
+    let date = new Date(2023, 11, 25);
 
     //* Get and set the specific date informations
     let day = date.getDate();
@@ -14,9 +14,12 @@ function main() {
     let year = date.getFullYear();
     let weekDay = date.getDay();
     let dateGermanFormat = getdateInGermanFormat(date);
+    let holiday = checkHoliday(date);
     console.log(dateGermanFormat);
     console.log(getMonthInformationFromDB(month));
     //? let firstDayOfMonth = new Date(year, month, 1).getDate();
+
+    console.log(holiday);
 
     //!==========//HTML-Replace//============================================================================================================================//
     //! Find and overwrite the specific html elements                                   
@@ -46,8 +49,10 @@ function main() {
         element.innerHTML = getTheHowManyWeekDay(day);
     });
     document.getElementById("month_information").innerHTML = getMonthInformationFromDB(month);
+    document.getElementById("holiday_info").innerHTML = getHolidayInfoForHTML(holiday);
     //!======================================================================================================================================================//
 }
+
 
 
 //?==========//Functions//===================================================================================================================================//
@@ -128,12 +133,29 @@ function getHolidays(year) {
     return holidays;
 }
 
+//* check if a date is a holiday, if yes return holidays object
+function checkHoliday(date) {
+    let holidays = getHolidays(date.getFullYear());
+    let holidayOrNull = holidays.find((holiday) => holiday.date.getTime() === date.getTime());
+    return holidayOrNull;
+}
+
+
 //* convert the date to german format (dd.mm.yyyy)
 function getdateInGermanFormat(date) {
     let day = date.getDate().toString().padStart(2, "0");
     let month = (date.getMonth() + 1).toString().padStart(2, "0");
     let year = date.getFullYear();
-    return `${day}.${month}.${year}`;
+    return `${day}.${month}.${year} `;
+}
+//* build the html string for the holiday info
+function getHolidayInfoForHTML(holiday) {
+    if (holiday != null) {
+        return "Heute ist ein Feiertag und zwar " + holiday.name + ` (${holiday.state}).`;
+    }
+    else {
+        return "Heute ist kein Feiertag.";
+    }
 }
 
 //?==========================================================================================================================================================//
