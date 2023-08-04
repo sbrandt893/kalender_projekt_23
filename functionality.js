@@ -1,12 +1,15 @@
-//* Wait until the page is loaded, then execute the main function
+//* Wait until the page (HTML) is loaded, then execute the "main" function
 window.onload = function () {
-    main();
+    updateCalendar(new Date().getTime());
 };
 
-function main() {
+//* Rebuild the calendar for a new date
+// Called every time the user changes the date
+function updateCalendar(newDate) {
 
-    //* Get the current date
-    let date = new Date(2023, 11, 25);
+    //* Create a new Date object from the given date
+    // Important to ensure the type
+    let date = new Date(newDate);
 
     //* Get and set the specific date informations
     let day = date.getDate();
@@ -15,14 +18,21 @@ function main() {
     let weekDay = date.getDay();
     let dateGermanFormat = getdateInGermanFormat(date);
     let holiday = checkHoliday(date);
-    console.log(dateGermanFormat);
-    console.log(getMonthInformationFromDB(month));
-    //? let firstDayOfMonth = new Date(year, month, 1).getDate();
+    let calendarTableForHTML = getCalendarTableForHTML(date);
+    let calendarHeadForHTML = getCalendarHeadForHTML(date);
+    let html = calendarHeadForHTML + calendarTableForHTML;
 
-    console.log(holiday);
+    getCalendarTableBodyForHTML(date);
+
 
     //!==========//HTML-Replace//============================================================================================================================//
-    //! Find and overwrite the specific html elements                                   
+    //! Find and overwrite the specific html elements    
+
+    // let list = document.getElementsByClassName("day");
+    // for (let i = 0; i < list.length; i++) {
+    //     list[i].innerHTML = day;
+    // }
+
     Array.from(document.getElementsByClassName("date_german_format")).forEach(element => {
         element.innerHTML = dateGermanFormat;
     });
@@ -48,11 +58,12 @@ function main() {
     Array.from(document.getElementsByClassName("howManyWeekDay")).forEach(element => {
         element.innerHTML = getTheHowManyWeekDay(day);
     });
-    document.getElementById("month_information").innerHTML = getMonthInformationFromDB(month);
+    document.getElementById("month_info").innerHTML = getMonthInformationFromDB(month);
     document.getElementById("holiday_info").innerHTML = getHolidayInfoForHTML(holiday);
+    document.getElementById("calendar").innerHTML = html;
+
     //!======================================================================================================================================================//
 }
-
 
 
 //?==========//Functions//===================================================================================================================================//
@@ -133,7 +144,8 @@ function getHolidays(year) {
     return holidays;
 }
 
-//* check if a date is a holiday, if yes return holidays object
+//* check if a date is a holiday
+// if yes return holidays object, if no return null
 function checkHoliday(date) {
     let holidays = getHolidays(date.getFullYear());
     let holidayOrNull = holidays.find((holiday) => holiday.date.getTime() === date.getTime());
@@ -160,15 +172,6 @@ function getHolidayInfoForHTML(holiday) {
 
 //?==========================================================================================================================================================//
 
-// console.log(getHolidays(year));
-// console.log(getHolidays(year).forEach(element => { console.log(element.date, element.name, element.state) }));
-
-// for (let element of getHolidays(year)) {
-//     let stateLow = element.state.toLowerCase();
-//     if (stateLow.includes("bundesweit") || stateLow.includes("niedersachsen")) {
-//         console.log(element.date, element.name, element.state);
-//     }
-// }
 
 
 //?==========//Database//====================================================================================================================================//
@@ -194,3 +197,137 @@ function getMonthInformationFromDB(month) {
 }
 
 //?==========================================================================================================================================================//
+
+function getCalendarHeadForHTML(date) {
+    let firstOfMonthBefore = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+    let firstOfNextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+
+    let newDate = new Date(date);
+    let html = `<div class="calendar">`;
+    html += `<img class="calendar_cover" , src="images\\black_cat.jpg" alt="black cat closeup face" />`;
+    html += `<div class="month_nav">`;
+    html += `<button onclick="updateCalendar(${firstOfMonthBefore.getTime()})">`;
+    html += `&lt;Zurück`;
+    html += `</button>`;
+    html += `<h1>`;
+    html += `<span class="month_german">${getMonthGerman(newDate.getMonth())}</span>`;
+    html += `</h1>`;
+    html += `<button onclick="updateCalendar(${firstOfNextMonth.getTime()})">`;
+    html += `Weiter&gt;`;
+    html += `</button>`;
+    html += `</div>`;
+
+    return html;
+}
+
+//* build the html string for the calendar table head
+function getCalendarTableHeadForHTML() {
+
+    let html = `<thead>`;
+    html += `<tr>`;
+    html += `<th>Mo</th>`;
+    html += `<th>Di</th>`;
+    html += `<th>Mi</th>`;
+    html += `<th>Do</th>`;
+    html += `<th>Fr</th>`;
+    html += `<th>Sa</th>`;
+    html += `<th>So</th>`;
+    html += `</tr>`;
+    html += `</thead>`;
+
+    return html;
+}
+//* build the html string for the calendar table body
+function getCalendarTableBodyForHTML(date) {
+
+    // define some variables for later use
+    let firstWeekdayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+    let lastDayMonthBefore = new Date(date.getFullYear(), date.getMonth(), 0);
+    let lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    let lastWeekdayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
+    let firstOfNextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+
+    //* create html string for table body with all days to draw
+    let html = `<tbody>`;
+
+    // days to be drawn from month before
+    let daysToDrawBefore = (firstWeekdayOfMonth + 6) % 7;
+    for (let i = 1; i <= daysToDrawBefore; i++) {
+        let day = new Date(lastDayMonthBefore.getFullYear(), lastDayMonthBefore.getMonth(), lastDayMonthBefore.getDate() - daysToDrawBefore + i);
+        if (day.getDay() == 1) {
+            html += `<tr>`;
+        }
+        html += `<td class="day_of_another_month "onclick="updateCalendar(${day.getTime()})">`;
+        html += day.getDate();
+        html += `</td>`;
+        if (day.getDay() == 0) {
+            html += `</tr>`;
+        }
+    }
+
+    // days to be drawn this month
+    for (let i = 1; i <= lastDayOfMonth; i++) {
+        let day = new Date(date.getFullYear(), date.getMonth(), i);
+        if (day.getDay() == 1) {
+            html += `<tr>`;
+        }
+        // if sunday
+        if (day.getDay() == 0) {
+            html += `<td class="sunday" onclick="updateCalendar(${day.getTime()})">`;
+            html += day.getDate();
+            html += `</td>`;
+        }
+        // if saturday
+        else if (day.getDay() == 6) {
+            html += `<td class="saturday" onclick="updateCalendar(${day.getTime()})">`;
+            html += day.getDate();
+            html += `</td>`;
+        }
+        // if weekday
+        else {
+            html += `<td onclick="updateCalendar(${day.getTime()})">`;
+            html += day.getDate();
+            html += `</td>`;
+        }
+        if (day.getDay() == 0) {
+            html += `</tr>`;
+        }
+    }
+
+    // days to be drawn from next month
+    let daysToDrawAfter = (7 - lastWeekdayOfMonth) % 7;
+    for (let i = 1; i <= daysToDrawAfter; i++) {
+        let day = (new Date(firstOfNextMonth.getFullYear(), firstOfNextMonth.getMonth(), i));
+        if (day.getDay() == 1) {
+            html += `<tr>`;
+        }
+        html += `<td class="day_of_another_month" onclick="updateCalendar(${day.getTime()})">`;
+        html += day.getDate();
+        html += `</td>`;
+        if (day.getDay() == 0) {
+            html += `</tr>`;
+        }
+    }
+
+    html += `</tbody>`;
+    html += `</table>`;
+
+    // console.log(firstWeekdayOfMonth);
+    // console.log(lastWeekdayOfMonth);
+
+    return html;
+}
+
+// weekday + 6 % 7
+
+function getCalendarTableForHTML(date) {
+    let firstOfNextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1).getTime();
+    let lastOfMonthBefore = new Date(date.getFullYear(), date.getMonth(), 0).getTime();
+    let firstOfMonthBefore = new Date(date.getFullYear(), date.getMonth() - 1, 1).getTime();
+
+    let html = `<table class="calendar_table">`;
+    html += getCalendarTableHeadForHTML(date);
+    html += getCalendarTableBodyForHTML(date);
+    html += `</table>`;
+    return html;
+} 
