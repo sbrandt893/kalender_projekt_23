@@ -13,8 +13,8 @@ body {
     grid-template-rows: auto;
     grid-template-areas:
         "header header"
-        "calendar day_description"
-        "calendar month_description";
+        "calendar_area day_info_area"
+        "calendar_area month_info_area";
 }
 
 .header {
@@ -30,8 +30,8 @@ body {
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
 }
 
-.calendar {
-    grid-area: calendar;
+.calendar_area {
+    grid-area: calendar_area;
     margin: auto;
     background-color: #ffc400;
     width: 75%;
@@ -48,8 +48,8 @@ body {
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
-.day_description {
-    grid-area: day_description;
+.day_info_area {
+    grid-area: day_info_area;
     margin: auto;
     width: 75%;
     padding: 5px;
@@ -62,14 +62,14 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-.day_description p {
+.day_info_area p {
     margin: 0;
     padding: 0;
     text-align: justify;
 }
 
-.month_description {
-    grid-area: month_description;
+.month_info_area {
+    grid-area: month_info_area;
     margin: auto;
     width: 75%;
     padding: 5px;
@@ -82,7 +82,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-.month_description p {
+.month_info_area p {
     margin: 0;
     padding: 0;
     text-align: justify;
@@ -144,15 +144,15 @@ body {
 
 
 
-.saturdays {
+.saturday {
     color: #ff00007e;
 }
 
-.sundays {
+.sunday {
     color: #ff0000;
 }
 
-.days_other_months {
+.day_of_another_month {
     color: #00000031;
 }
 
