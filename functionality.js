@@ -202,6 +202,7 @@ function getCalendarHeadForHTML(date) {
     let firstOfMonthBefore = new Date(date.getFullYear(), date.getMonth() - 1, 1);
     let firstOfNextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
 
+
     let newDate = new Date(date);
     let html = `<div class="calendar">`;
     html += `<img class="calendar_cover" , src="images\\black_cat.jpg" alt="black cat closeup face" />`;
@@ -268,27 +269,33 @@ function getCalendarTableBodyForHTML(date) {
     // days to be drawn this month
     for (let i = 1; i <= lastDayOfMonth; i++) {
         let day = new Date(date.getFullYear(), date.getMonth(), i);
+        let classAttribute = "";
         if (day.getDay() == 1) {
             html += `<tr>`;
         }
+        // if today
+        if (day.getTime() == new Date().setHours(0, 0, 0, 0)) {
+            classAttribute = " today";
+        }
         // if sunday
         if (day.getDay() == 0) {
-            html += `<td class="sunday" onclick="updateCalendar(${day.getTime()})">`;
-            html += day.getDate();
-            html += `</td>`;
+            classAttribute = " sunday";
+            // html += `<td class="sunday" onclick="updateCalendar(${day.getTime()})">`;
+            // html += day.getDate();
+            // html += `</td>`;
         }
         // if saturday
-        else if (day.getDay() == 6) {
-            html += `<td class="saturday" onclick="updateCalendar(${day.getTime()})">`;
-            html += day.getDate();
-            html += `</td>`;
+        if (day.getDay() == 6) {
+            classAttribute = " saturday";
+            // html += `<td class="saturday" onclick="updateCalendar(${day.getTime()})">`;
+            // html += day.getDate();
+            // html += `</td>`;
         }
-        // if weekday
-        else {
-            html += `<td onclick="updateCalendar(${day.getTime()})">`;
-            html += day.getDate();
-            html += `</td>`;
-        }
+
+        html += `<td class="${classAttribute}" onclick="updateCalendar(${day.getTime()})">`;
+        html += day.getDate();
+        html += `</td>`;
+
         if (day.getDay() == 0) {
             html += `</tr>`;
         }
