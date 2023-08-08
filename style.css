@@ -162,6 +162,10 @@ body {
     color: #ff0000;
 }
 
+.holiday {
+    background-color: #00ccff;
+}
+
 .day_of_another_month {
     color: #00000031;
 }
