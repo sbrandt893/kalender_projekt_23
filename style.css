@@ -1,6 +1,4 @@
 body {
-    margin: 0;
-    padding: 0;
     background-image: url("images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -13,78 +11,70 @@ body {
     grid-template-rows: auto;
     grid-template-areas:
         "header header"
-        "calendar day_description"
-        "calendar month_description";
+        "calendar_area day_info_area"
+        "calendar_area month_info_area";
 }
 
 .header {
+    height: 10vh;
     grid-area: header;
-    margin: auto;
     color: #ffffff;
-    font-size: auto;
+    font-size: 2vw;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     text-align: center;
-    margin-bottom: 10px;
-    margin-top: 10px;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
 }
 
-.calendar {
-    grid-area: calendar;
+.calendar_area {
+    grid-area: calendar_area;
     margin: auto;
-    background-color: #ffc400;
+    background-color: #ff0055;
+    opacity: 0.75;
     width: 75%;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 10px;
     padding: 10px;
-    margin-bottom: 10px;
-    margin-top: 5px;
+    margin-bottom: 10%;
+    margin-top: 10%;
     text-align: center;
-    font-size: auto;
+    font-size: 1vw;
     font-weight: bold;
     color: #000000;
     font-family: 'Roboto', sans-serif;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
-.day_description {
-    grid-area: day_description;
-    margin: auto;
+.day_info_area {
+    grid-area: day_info_area;
+    margin: 10%;
     width: 75%;
-    padding: 5px;
-    margin-bottom: 10px;
-    margin-top: 10px;
     text-align: center;
-    font-size: auto;
+    font-size: 1.2vw;
     font-weight: bold;
     color: #ffffff;
     font-family: 'Roboto', sans-serif;
 }
 
-.day_description p {
-    margin: 0;
-    padding: 0;
+.day_info_area p {
     text-align: justify;
 }
 
-.month_description {
-    grid-area: month_description;
+.month_info_area {
+    grid-area: month_info_area;
     margin: auto;
     width: 75%;
     padding: 5px;
     margin-bottom: 10px;
     margin-top: 10px;
     text-align: center;
-    font-size: auto;
+    font-size: 1.2vw;
     font-weight: bold;
     color: #ffffff;
     font-family: 'Roboto', sans-serif;
 }
 
-.month_description p {
-    margin: 0;
-    padding: 0;
+.month_info_area p {
     text-align: justify;
 }
 
@@ -98,61 +88,81 @@ body {
     margin: auto;
     border: 1px solid #000000;
     border-radius: 10px;
+    opacity: 0.75;
 }
 
 .calendar_table {
-    background-color: #ffffff;
-    table-layout: fixed;
+    background-color: #fff0d8;
+    opacity: 0.75;
     width: 100%;
     max-height: 100%;
     border: 1px solid #000000;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-radius: 10px;
+    border-spacing: 0.5vw;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .calendar_table td {
+    cursor: pointer;
+    opacity: 0.75;
     border: 1px solid #000000;
+    border-radius: 10px;
     height: 100%;
     vertical-align: bottom;
-    padding: 5px;
     text-align: end;
 }
 
+.calendar_table td:hover {
+    background-color: #ffd000;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
 .calendar_table th {
-    background: #ff4800;
+    background-color: #ff4800;
     height: 100%;
     text-align: center;
-    font-size: auto;
+    font-size: 1vw;
     font-weight: bold;
     color: #000000;
     font-family: 'Roboto', sans-serif;
 }
 
+.calendar_table td {
+    padding: 10px;
+}
 
 .calendar_table tbody td {
     height: 3em;
-    background-color: #ffffff;
     border: 1px solid #000000;
     vertical-align: bottom;
-    padding: 5px;
     text-align: end;
     font-size: auto;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
 
+.today {
+    background-color: #ffd000;
+    color: #ffffff;
+}
 
-
-.saturdays {
+.saturday {
     color: #ff00007e;
 }
 
-.sundays {
+.sunday {
     color: #ff0000;
 }
 
-.days_other_months {
+.holiday {
+    background-color: #00ccff;
+}
+
+.day_of_another_month {
     color: #00000031;
 }
 
@@ -166,7 +176,24 @@ body {
 .month_nav button {
     background-color: transparent;
     border: none;
-    font-size: auto;
+    font-size: 1.5vw;
     font-weight: bold;
-    color: #000000;
+    color: black;
+}
+
+.is_clickable {
+    cursor: pointer;
+}
+
+
+
+tbody td {
+    padding: 10px;
+    /* Hier kannst du den gewünschten Abstand in Pixeln einstellen */
+}
+
+/* Entfernt den Abstand zwischen den <th> Zellen im <thead> */
+thead th {
+    padding: 0;
+    /* Kein Abstand für <th> */
 }
