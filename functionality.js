@@ -7,19 +7,20 @@
 //^ - Burn in your Eyes
 //~ - Sections
 //todo - To Do
-//~==========//END:Legend//==================================================================================================================================//
+//~==========//END---Legend//================================================================================================================================//
 
 
 // Wait until the page (HTML) is loaded, then execute the "main" function
 window.onload = function () {
-    updateCalendar(new Date());
+    updateCalendar(new Date().getTime());
 };
 
 //& Rebuild the calendar for a new date
 // Called every time the user changes the date
-function updateCalendar(newDate) {
+function updateCalendar(dateTime) {
 
-    date = new Date(newDate);
+    // create a new date object from the given dateTime
+    date = new Date(dateTime);
 
     // Set variables for HTML-Replace
     let day = date.getDate();
@@ -30,42 +31,37 @@ function updateCalendar(newDate) {
     let holiday = checkHoliday(date);
     let nextHoliday = getNextHoliday(date);
     let calendarHtml = getCalendarForHTML(date);
+    let season = getBodySeason(month);
+    let zodiacSign = getZodiacSign(date);
+    let monthString = getMonthGerman(month);
 
     //~==========//HTML-Replace//============================================================================================================================//
     //~ Find and overwrite the specific HTML elements    
 
-    Array.from(document.getElementsByClassName("day")).forEach(element => {
-        element.innerHTML = day.toString().length == 1 ? "0" + day : day;
-    });
-    Array.from(document.getElementsByClassName("month")).forEach(element => {
-        element.innerHTML = (month + 1).toString().length == 1 ? "0" + (month + 1) : (month + 1);
-    });
-    Array.from(document.getElementsByClassName("year")).forEach(element => {
-        element.innerHTML = year;
-    });
-    Array.from(document.getElementsByClassName("weekDay")).forEach(element => {
-        element.innerHTML = getWeekDayGerman(weekDay);
-    });
-    Array.from(document.getElementsByClassName("date_german_format")).forEach(element => {
-        element.innerHTML = dateGermanFormat;
-    });
-    Array.from(document.getElementsByClassName("month_german")).forEach(element => {
-        element.innerHTML = getMonthGerman(month);
-    });
-    Array.from(document.getElementsByClassName("howManyWeekDay")).forEach(element => {
-        element.innerHTML = getTheHowManyWeekDay(day);
-    });
+    document.getElementById('title').innerHTML = `Kalender ${year}`;
+    document.querySelectorAll('.year').forEach(element => { element.innerHTML = year; });
+    document.querySelectorAll('.weekday').forEach(element => { element.innerHTML = getWeekDayGerman(weekDay); });
+    document.querySelectorAll('.date_german_format').forEach(element => { element.innerHTML = dateGermanFormat; });
+    document.querySelectorAll('.month_german').forEach(element => { element.innerHTML = monthString; });
+    document.querySelectorAll('.how_many_weekday').forEach(element => { element.innerHTML = getTheHowManyWeekDay(day); });
     document.getElementById("month_info").innerHTML = getMonthInformationFromDB(month);
     document.getElementById("holiday_info").innerHTML = getHolidayInfoForHTML(holiday);
     document.getElementById('next_holiday_info').innerHTML = getNextHolidayInfoForHTML(nextHoliday);
     document.getElementById("calendar").innerHTML = calendarHtml;
+    document.querySelector('body').style.setProperty('--seasonalBodyBackgroundImage', `var(--${season}BodyBackgroundImage)`);
+    document.getElementById('calendar_area').style.setProperty('--seasonalCalendarBackgroundColor', `var(--${season}CalendarBackgroundColor)`);
+    document.querySelectorAll('.calendar_table td').forEach(td => { td.style.setProperty('--seasonalCalendarCellBackgroundColor', `var(--${season}CalendarCellBackgroundColor)`); });
+    document.querySelectorAll('.calendar_table td').forEach(td => { td.style.setProperty('--seasonalCalendarCellTextColor', `var(--${season}CalendarCellTextColor)`); });
+    document.querySelectorAll('.calendar_table td').forEach(td => { td.style.setProperty('--seasonalCalendarCellHoverBackgroundColor', `var(--${season}CalendarCellHoverBackgroundColor)`); });
+    document.querySelectorAll('.calendar_table td').forEach(td => { td.style.setProperty('--seasonalCalendarCellBackgroundColorForOtherMonths', `var(--${season}CalendarCellBackgroundColorForOtherMonths)`); });
+    document.querySelectorAll('.calendar_table td').forEach(td => { td.style.setProperty('--seasonalCalendarCellHoverBackgroundColorForOtherMonths', `var(--${season}CalendarCellHoverBackgroundColorForOtherMonths)`); });
+    document.querySelector('tbody').style.setProperty('--monthlyCalendarBackgroundImage', `var(--${zodiacSign}CalendarBackgroundImage)`);
 
-    //~==========//END:HTML-Replace//========================================================================================================================//
+    //~==========//END:HTML-Replace//======================================================================================================================//
 }
 
 
-
-//~==========//Functions-For_simple_HTML_Replacements//======================================================================================================//
+//~==========//Functions---For-simple-HTML-Replacements//====================================================================================================//
 
 //& convert weekDay as number to german weekDay as string
 function getWeekDayGerman(weekDay) {
@@ -198,11 +194,11 @@ function getNextHolidayInfoForHTML(nextHoliday) {
     }
 }
 
-//~==========//END:Functions-For_simple_HTML_Replacements//================================================================================================//
+//~==========//END:Functions---For-simple-HTML-Replacements//================================================================================================//
 
 
 
-//~==========//Functions-For_Calender_Building//===========================================================================================================//
+//~==========//Functions---For-Calender-Building//===========================================================================================================//
 
 //& build the HTML string for the calendar sheet
 function getCalendarForHTML(date) {
@@ -216,21 +212,52 @@ function getCalendarForHTML(date) {
 //& build the HTML string for the calendar head
 function getCalendarHeadForHTML(date) {
 
-    let firstOfMonthBefore = new Date(date.getFullYear(), date.getMonth() - 1, 1);
-    let firstOfNextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-    let html = `<div class="calendar">`;
-    html += `<img class="calendar_cover" , src="images\\black_cat.jpg" alt="black cat closeup face" />`;
-    html += `<div class="month_nav">`;
-    html += `<button onclick="updateCalendar(${firstOfMonthBefore.getTime()})">`;
-    html += `&lt;Zurück`;
-    html += `</button>`;
-    html += `<h1>`;
-    html += `<span class="month_german">${getMonthGerman(date.getMonth())}</span>`;
-    html += `</h1>`;
-    html += `<button onclick="updateCalendar(${firstOfNextMonth.getTime()})">`;
-    html += `Weiter&gt;`;
-    html += `</button>`;
-    html += `</div>`;
+    // create some dates for navigation
+    let sameDayNextMonth = new Date(date.getFullYear(), date.getMonth() + 1, date.getDate());
+    if (sameDayNextMonth.getMonth() != new Date(date.getFullYear(), date.getMonth() + 1).getMonth()) {
+        sameDayNextMonth = new Date(date.getFullYear(), date.getMonth() + 2, 0);
+    }
+
+    let sameDayMonthBefore = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
+    if (sameDayMonthBefore.getMonth() != new Date(date.getFullYear(), date.getMonth() - 1).getMonth()) {
+        sameDayMonthBefore = new Date(date.getFullYear(), date.getMonth(), 0);
+    }
+
+    let sameDayNextYear = new Date(date.getFullYear() + 1, date.getMonth(), date.getDate());
+    if (sameDayNextYear.getMonth() != date.getMonth()) {
+        sameDayNextYear = new Date(date.getFullYear() + 1, date.getMonth() + 1, 0);
+    }
+
+    let sameDayYearBefore = new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
+    if (sameDayYearBefore.getMonth() != date.getMonth()) {
+        sameDayYearBefore = new Date(date.getFullYear() - 1, date.getMonth() + 1, 0);
+    }
+
+    let html = '<div class="calendar_head">';
+    html += '<div class="month_nav">';
+    html += `   <button class="button_change_month_and_year" onclick="updateCalendar(${sameDayMonthBefore.getTime()})">`;
+    html += '       &lt;';
+    html += '   </button>';
+    html += `   <p class="month_german">${getMonthGerman(date.getMonth()).substring(0, 3)}.</p>`;
+    html += `   <button class="button_change_month_and_year" onclick="updateCalendar(${sameDayNextMonth.getTime()})">`;
+    html += '       &gt;';
+    html += '   </button>';
+    html += '</div>';
+    html += '<div class="actual_date_nav">';
+    html += `   <button class="button_change_month_and_year" onclick="updateCalendar(${new Date().getTime()})">`;
+    html += '   Heute';
+    html += '   </button>';
+    html += '</div>';
+    html += '<div class="year_nav">';
+    html += `   <button class="button_change_month_and_year" onclick="updateCalendar(${sameDayYearBefore.getTime()})">`;
+    html += '       &lt;';
+    html += '   </button>';
+    html += `   <p class="year">${date.getFullYear()}</p>`;
+    html += `  <button class="button_change_month_and_year" onclick="updateCalendar(${sameDayNextYear.getTime()})">`;
+    html += '       &gt;';
+    html += '   </button>';
+    html += '</div>';
+    html += '</div>';
 
     return html;
 }
@@ -269,49 +296,38 @@ function getCalendarTableBodyForHTML(date) {
 
     // define some variables for later use
     let firstWeekdayThisMonth = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-    let lastDayThisMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    let lastWeekdayThisMonth = lastDayThisMonth.getDay();
+    let daysToDrawFromMonthBefore = (firstWeekdayThisMonth + 6) % 7;
+    let firstDateToDraw = new Date(date.getFullYear(), date.getMonth(), 1 - daysToDrawFromMonthBefore);
 
     // create HTML string for table body with all days to draw
+    // let tbodyStyle = "background-image: url('images/seasonal_body_background/spring.jpg');";
     let html = `<tbody>`;
 
-    // days to be drawn from month before
-    if (firstWeekdayThisMonth != 1) {
-        html += `<tr>`;
-        let daysToDrawBefore = (firstWeekdayThisMonth + 6) % 7;
-        for (let i = daysToDrawBefore; i > 0; i--) {
-            let day = new Date(date.getFullYear(), date.getMonth(), 1 - i);
-            html += `<td class="day_of_another_month "onclick="updateCalendar(${day.getTime()})">`;
-            html += day.getDate();
-            html += `</td>`;
-        }
-    }
+    for (let i = 0; i < 42; i++) {
 
-    // days to be drawn this month
-    for (let i = 1; i <= lastDayThisMonth.getDate(); i++) {
+        let day = new Date(firstDateToDraw.getFullYear(), firstDateToDraw.getMonth(), firstDateToDraw.getDate() + i);
 
-        let day = new Date(date.getFullYear(), date.getMonth(), i);
-        let classAttribute = "";
         if (day.getDay() == 1) {
             html += `<tr>`;
         }
-        // check day and add class attribute
-        // if today
-        if (day.getTime() == new Date().setHours(0, 0, 0, 0)) {
-            classAttribute = " today";
+
+        let classAttribute = "";
+        if (day.getDate() == date.getDate() && day.getMonth() == date.getMonth() && day.getFullYear() == date.getFullYear()) {
+            classAttribute += " today";
         }
-        // if sunday
         if (day.getDay() == 0) {
-            classAttribute = " sunday";
+            classAttribute += " sunday";
         }
-        // if saturday
         if (day.getDay() == 6) {
-            classAttribute = " saturday";
+            classAttribute += " saturday";
         }
-        //if holiday
         if (checkHoliday(day) != null) {
-            classAttribute = " holiday";
+            classAttribute += " holiday";
         }
+        if (day.getMonth() != date.getMonth()) {
+            classAttribute += " day_of_another_month";
+        }
+
         html += `<td class="${classAttribute}" onclick="updateCalendar(${day.getTime()})">`;
         html += day.getDate();
         html += `</td>`;
@@ -319,27 +335,66 @@ function getCalendarTableBodyForHTML(date) {
             html += `</tr>`;
         }
     }
-
-    // days to be drawn from next month
-    if (lastWeekdayThisMonth != 0) {
-        let daysToDrawAfter = (7 - lastWeekdayThisMonth) % 7;
-        for (let i = 1; i <= daysToDrawAfter; i++) {
-            let day = (new Date(date.getFullYear(), date.getMonth() + 1, 0 + i));
-            html += `<td class="day_of_another_month" onclick="updateCalendar(${day.getTime()})">`;
-            html += day.getDate();
-            html += `</td>`;
-        }
-        html += `</tr>`;
-    }
-
-    html += `</tbody>`;
-    html += `</table>`;
-
     return html;
 }
 
-//~==========//END:Functions-For_Calender_Building//=========================================================================================================//
+//~==========//END:Functions---For-Calender-Building//=======================================================================================================//
 
+
+//~==========//Functions---For-CSS-Design//==================================================================================================================//
+
+//& get the season for a given month
+function getBodySeason(month) {
+
+    if (month == 2 || month == 3 || month == 4) {
+        return "spring";
+    }
+    else if (month == 5 || month == 6 || month == 7) {
+        return "summer";
+    }
+    else if (month == 8 || month == 9 || month == 10) {
+        return "fall";
+    }
+    else if (month == 11 || month == 0 || month == 1) {
+        return "winter";
+    }
+}
+
+//& get the zodiac sign for a given date
+function getZodiacSign(dateTime) {
+
+    let date = new Date(dateTime);
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+
+    if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) {
+        return "aries";
+    } else if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) {
+        return "taurus";
+    } else if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) {
+        return "gemini";
+    } else if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) {
+        return "cancer";
+    } else if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) {
+        return "leo";
+    } else if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) {
+        return "virgo";
+    } else if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) {
+        return "libra";
+    } else if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) {
+        return "scorpio";
+    } else if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) {
+        return "sagittarius";
+    } else if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) {
+        return "capricorn";
+    } else if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) {
+        return "aquarius";
+    } else {
+        return "pisces";
+    }
+}
+
+//~==========//END:Functions---For-CSS-Design//==============================================================================================================//
 
 
 //~==========//Database//====================================================================================================================================//
