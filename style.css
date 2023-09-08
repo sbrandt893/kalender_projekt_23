@@ -1,5 +1,78 @@
+:root {
+    /* seasonal body backgrounds */
+    --seasonalBodyBackgroundImage: url('images/seasonal_body_background/spring.jpg');
+    --springBodyBackgroundImage: url('images/seasonal_body_background/spring.jpg');
+    --summerBodyBackgroundImage: url('images/seasonal_body_background/summer.jpg');
+    --fallBodyBackgroundImage: url('images/seasonal_body_background/fall.jpg');
+    --winterBodyBackgroundImage: url('images/seasonal_body_background/winter.jpg');
+
+    /* zodiac sign calendar backgrounds */
+    --monthlyCalendarBackgroundImage: url('images/monthly_calendar_background/capricon.jpg');
+    --capricornCalendarBackgroundImage: url('images/monthly_calendar_background/capricorn.jpg');
+    --aquariusCalendarBackgroundImage: url('images/monthly_calendar_background/aquarius.jpg');
+    --piscesCalendarBackgroundImage: url('images/monthly_calendar_background/pisces.jpg');
+    --ariesCalendarBackgroundImage: url('images/monthly_calendar_background/aries.jpg');
+    --taurusCalendarBackgroundImage: url('images/monthly_calendar_background/taurus.jpg');
+    --geminiCalendarBackgroundImage: url('images/monthly_calendar_background/gemini.jpg');
+    --cancerCalendarBackgroundImage: url('images/monthly_calendar_background/cancer.jpg');
+    --leoCalendarBackgroundImage: url('images/monthly_calendar_background/leo.jpg');
+    --virgoCalendarBackgroundImage: url('images/monthly_calendar_background/virgo.jpg');
+    --libraCalendarBackgroundImage: url('images/monthly_calendar_background/libra.jpg');
+    --scorpioCalendarBackgroundImage: url('images/monthly_calendar_background/scorpio.jpg');
+    --sagittariusCalendarBackgroundImage: url('images/monthly_calendar_background/sagittarius.jpg');
+
+    /* seasonal calendar background colors */
+    --seasonalCalendarBackgroundColor: linear-gradient(to bottom right, #ff0033, #ffb7c5);
+    --springCalendarBackgroundColor: linear-gradient(to bottom right, #ff0033, #ffb7c5);
+    --summerCalendarBackgroundColor: linear-gradient(to bottom right, #ff0000, #ffea00);
+    --fallCalendarBackgroundColor: linear-gradient(to bottom right, #8b0000, #ffd700);
+    --winterCalendarBackgroundColor: linear-gradient(to bottom right, #00008b, #82eefd);
+
+    /* seasonal calendar cell background colors */
+    --seasonalCalendarCellBackgroundColor: #ef6f88aa;
+    --springCalendarCellBackgroundColor: #ef6f88aa;
+    --summerCalendarCellBackgroundColor: #DAA520cc;
+    --fallCalendarCellBackgroundColor: #F5761Aaa;
+    --winterCalendarCellBackgroundColor: #73C2FBcc;
+
+    /* seasonal calendar cell background colors for other months */
+    --seasonalCalendarCellBackgroundColorForOtherMonths: #ef6f88cc;
+    --springCalendarCellBackgroundColorForOtherMonths: rgba(159, 31, 56, 0.75);
+    --summerCalendarCellBackgroundColorForOtherMonths: rgba(168, 115, 0, 0.75);
+    --fallCalendarCellBackgroundColorForOtherMonths: rgba(165, 38, 0, 0.75);
+    --winterCalendarCellBackgroundColorForOtherMonths: rgba(15, 94, 151, 0.75);
+
+    /* seasonal calendar cell hover background colors */
+    --seasonalCalendarCellHoverBackgroundColor: #ef6f88;
+    --springCalendarCellHoverBackgroundColor: #ef6f88;
+    --summerCalendarCellHoverBackgroundColor: #ffd200;
+    --fallCalendarCellHoverBackgroundColor: #F5761A;
+    --winterCalendarCellHoverBackgroundColor: #e3e3ff;
+
+    /* seasonal calendar cell hover background colors for other months */
+    --seasonalCalendarCellHoverBackgroundColorForOtherMonths: #ef6f88;
+    --springCalendarCellHoverBackgroundColorForOtherMonths: rgba(159, 31, 56, 1);
+    --summerCalendarCellHoverBackgroundColorForOtherMonths: rgba(175, 130, 0, 1);
+    --fallCalendarCellHoverBackgroundColorForOtherMonths: rgba(165, 38, 0, 1);
+    --winterCalendarCellHoverBackgroundColorForOtherMonths: rgba(147, 147, 175, 1);
+
+    /* seasonal calendar cell text colors */
+    --seasonalCalendarCellTextColor: #000000;
+    --springCalendarCellTextColor: #000000;
+    --summerCalendarCellTextColor: #000000;
+    --fallCalendarCellTextColor: #000000;
+    --winterCalendarCellTextColor: #000000;
+
+
+    --holidayTextColor: #006eff;
+    --saturdayTextColor: #8B0000;
+    --sundayTextColor: #8B0000;
+    --calendarSundayColor: #8B0000;
+}
+
+
 body {
-    background-image: url("images/background.jpg");
+    background-image: var(--seasonalBodyBackgroundImage);
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -16,184 +89,203 @@ body {
 }
 
 .header {
-    height: 10vh;
     grid-area: header;
     color: #ffffff;
-    font-size: 2vw;
+    font-size: 1.5vw;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     text-align: center;
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
+    text-shadow: 0.15em 0.15em 0.15em #000000;
 }
 
-.calendar_area {
+#calendar_area {
     grid-area: calendar_area;
     margin: auto;
-    background-color: #ff0055;
-    opacity: 0.75;
-    width: 75%;
-    border: 1px solid #000000;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 10%;
-    margin-top: 10%;
+    background-image: var(--seasonalCalendarBackgroundColor);
+    width: 80%;
+    border: 0.1em solid #000000;
+    border-radius: 1em;
+    margin-top: 2em;
+    padding: 0.5em;
     text-align: center;
-    font-size: 1vw;
+    font-size: 1.5vw;
     font-weight: bold;
     color: #000000;
     font-family: 'Roboto', sans-serif;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0.15em 0.15em 0.5em 0em rgba(0, 0, 0, 0.75);
+}
+
+h2 {
+    margin: 0em;
+    text-align: center;
+    font-size: 1.5vw;
+    text-decoration: underline;
 }
 
 .day_info_area {
     grid-area: day_info_area;
-    margin: 10%;
-    width: 75%;
-    text-align: center;
-    font-size: 1.2vw;
-    font-weight: bold;
-    color: #ffffff;
-    font-family: 'Roboto', sans-serif;
-}
-
-.day_info_area p {
-    text-align: justify;
 }
 
 .month_info_area {
     grid-area: month_info_area;
+}
+
+.day_info_area,
+.month_info_area {
+    background-color: rgba(0, 0, 0, 0.5);
     margin: auto;
     width: 75%;
-    padding: 5px;
-    margin-bottom: 10px;
-    margin-top: 10px;
     text-align: center;
     font-size: 1.2vw;
     font-weight: bold;
     color: #ffffff;
+    text-shadow: 0.1em 0.1em 0.1em #000000;
     font-family: 'Roboto', sans-serif;
+    border-radius: 30px;
+    padding: 1em;
 }
 
+.day_info_area p,
 .month_info_area p {
+    margin: 0em;
+    margin-top: 1em;
     text-align: justify;
 }
 
 
-/* Cover Image for each month */
-.calendar_cover {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    margin: auto;
-    border: 1px solid #000000;
-    border-radius: 10px;
-    opacity: 0.75;
+.calendar_table {
+    table-layout: fixed;
+    border: 0.1em solid #000000;
+    border-collapse: separate;
+    border-radius: 1em;
+    border-spacing: 0.25em;
+    padding: 0.25em;
 }
 
-.calendar_table {
-    background-color: #fff0d8;
-    opacity: 0.75;
-    width: 100%;
-    max-height: 100%;
-    border: 1px solid #000000;
-    border-collapse: separate;
-    border-radius: 10px;
-    border-spacing: 0.5vw;
-    margin-top: 10px;
-    margin-bottom: 10px;
+tbody {
+    background-image: var(--monthlyCalendarBackgroundImage);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .calendar_table td {
+    height: 7.5vh;
+    width: 5vw;
+    background-color: var(--seasonalCalendarCellBackgroundColor);
+    color: var(--seasonalCalendarCellTextColor);
     cursor: pointer;
-    opacity: 0.75;
     border: 1px solid #000000;
-    border-radius: 10px;
-    height: 100%;
+    border-radius: 0.5em;
+    border: 1px solid black;
+    padding: 5px;
     vertical-align: bottom;
     text-align: end;
+    font-size: 1.5vw;
+    transition: transform .2s;
+    -webkit-text-stroke: 0.5px whitesmoke;
+    border: 1px solid #000000;
+    text-align: end;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.calendar_table td.sunday {
+    color: var(--sundayTextColor);
+}
+
+.calendar_table td.saturday {
+    color: var(--saturdayTextColor);
+}
+
+.calendar_table td.holiday {
+    color: var(--holidayTextColor);
+}
+
+.calendar_table td.today {
+    box-shadow: 0 0 8px 8px rgb(255, 255, 255);
+}
+
+.calendar_table td.day_of_another_month {
+    background-color: var(--seasonalCalendarCellBackgroundColorForOtherMonths);
+}
+
+.calendar_table td.day_of_another_month:hover {
+    background-color: var(--seasonalCalendarCellHoverBackgroundColorForOtherMonths);
 }
 
 .calendar_table td:hover {
-    background-color: #ffd000;
-    color: #ffffff;
+    transform: scale(1.5);
+    opacity: 1;
+    position: relative;
+    z-index: 9999;
+    background-color: var(--seasonalCalendarCellHoverBackgroundColor);
     font-weight: bold;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
 .calendar_table th {
-    background-color: #ff4800;
-    height: 100%;
     text-align: center;
-    font-size: 1vw;
+    font-size: 1.5vw;
     font-weight: bold;
     color: #000000;
     font-family: 'Roboto', sans-serif;
 }
 
-.calendar_table td {
-    padding: 10px;
+.calendar_head {
+    font-size: 2vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5em;
 }
 
-.calendar_table tbody td {
-    height: 3em;
-    border: 1px solid #000000;
-    vertical-align: bottom;
-    text-align: end;
-    font-size: auto;
-    font-weight: bold;
-    font-family: 'Roboto', sans-serif;
+.month_nav,
+.year_nav {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.today {
-    background-color: #ffd000;
-    color: #ffffff;
+.month_nav button,
+.year_nav button {
+    float: none;
+    display: inline-block;
 }
 
-.saturday {
-    color: #ff00007e;
-}
-
-.sunday {
-    color: #ff0000;
-}
-
-.holiday {
-    background-color: #00ccff;
-}
-
-.day_of_another_month {
-    color: #00000031;
-}
-
-.month_nav {
+.actual_date_nav {
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
 
 }
 
-.month_nav button {
-    background-color: transparent;
-    border: none;
-    font-size: 1.5vw;
+
+.button_change_month_and_year {
+    padding: 0.5vw 1vw;
+    font-size: 1vw;
     font-weight: bold;
-    color: black;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ffffff80;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+
+}
+
+.button_change_month_and_year:hover {
+    background-color: #ffffffda;
+    transform: scale(1.1);
+}
+
+.calendar_head .month_german,
+.calendar_head .year {
+    font-family: 'Roboto', sans-serif;
+    flex: 0 0 auto;
+    margin: 0 10px;
 }
 
 .is_clickable {
     cursor: pointer;
-}
-
-
-
-tbody td {
-    padding: 10px;
-    /* Hier kannst du den gewünschten Abstand in Pixeln einstellen */
-}
-
-/* Entfernt den Abstand zwischen den <th> Zellen im <thead> */
-thead th {
-    padding: 0;
-    /* Kein Abstand für <th> */
 }
