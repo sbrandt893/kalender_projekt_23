@@ -1,3 +1,0 @@
-1.0 - stable base version
-+* 1.1 - added feature/Functions checkHoliday and getHolidayInfoForHTML
-+* 1.2 - added feature/Functions isTodayHoliday
